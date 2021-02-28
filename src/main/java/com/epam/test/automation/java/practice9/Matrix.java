@@ -18,16 +18,10 @@ public class Matrix {
 
     public void setArray(double[][] array) { this.array = array;}
 
-    public Matrix(int row, int column) {
+    public Matrix(int row, int column) throws MatrixException {
 
-        if (row <= 0)
-        {
-            throw new ArrayIndexOutOfBoundsException (ACTION_2);
-        }
-        if (column <= 0)
-        {
-            throw new ArrayIndexOutOfBoundsException (ACTION_2);
-        }
+        if (row <= 0 || column <= 0) { throw new MatrixException (ACTION_2); }
+
         rows = row;
         columns = column;
         array = new double[rows][columns];
