@@ -16,7 +16,6 @@ public class Matrix {
     private int getColumns() { return columns;}
     public void setColumns(int columns) { this.columns = columns;}
 
-    private double[][] getArray() { return array;}
     public void setArray(double[][] array) { this.array = array;}
 
     public Matrix(int row, int column) {
@@ -55,11 +54,13 @@ public class Matrix {
         return columns;
     }
 
-    public double[][] twoDimensionalArrayOutOfMatrix() {
+    public double[][] twoDimensionalArrayOutOfMatrix() throws MatrixException {
         double[][] buf = new double[rows][columns];
+        if (rows <= 0 || columns <= 0) { throw new MatrixException(ACTION_2); }
         for (int i = 0; i < rows; i++)
             for (int j = 0; j < columns; j++)
                 buf[i][j] = array[i][j];
+
         return buf;
     }
 
@@ -77,6 +78,8 @@ public class Matrix {
         }
         Matrix z = new Matrix(rows, columns);
         double value;
+
+        if (rows <= 0 || columns <= 0) { throw new MatrixException(ACTION_2); }
 
         if(rows == matrix.getRows() && columns == matrix.getColumns()) {
             for (int i = 0; i < matrix.getRows(); i++) {
@@ -99,8 +102,11 @@ public class Matrix {
             throw new IllegalArgumentException(ACTION_1);
         }
 
+        if (rows <= 0 || columns <= 0) { throw new MatrixException(ACTION_2); }
+
         Matrix z = new Matrix(rows, columns);
         double value;
+
         if(rows == matrix.getRows() && columns == matrix.getColumns())
         {
             for(int i = 0; i < matrix.getRows(); i++)
@@ -126,6 +132,7 @@ public class Matrix {
         {
             throw new IllegalArgumentException(ACTION_1);
         }
+        if (rows <= 0 || columns <= 0) { throw new MatrixException(ACTION_2); }
 
             Matrix z = new Matrix(rows, matrix.getColumns());
             double value;
