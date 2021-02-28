@@ -5,3 +5,4 @@ public class MatrixException extends Exception {
         super(message);
     }
 }
+

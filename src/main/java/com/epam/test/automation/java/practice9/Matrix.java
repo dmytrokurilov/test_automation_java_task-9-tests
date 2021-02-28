@@ -4,122 +4,157 @@ import java.text.DecimalFormat;
 
 public class Matrix {
 
-    /**
-     * Implement a constructor that creates an empty matrix with a given number of rows
-     * columns (all values in matrix equal 0.0)
-     *
-     * @param row    number of rows
-     * @param column number of columns
-     * @return Returns a new instance of the matrix with the specified parameters
-     */
+    private int rows;
+    private int columns;
+    private double[][] array;
+    private static final String ACTION_1 = "matrix is null";
+    private static final String ACTION_2 = "Incompatible matrix sizes";
+
+    private int getRows() { return rows;}
+    public void setRows(int rows) { this.rows = rows;}
+
+    private int getColumns() { return columns;}
+    public void setColumns(int columns) { this.columns = columns;}
+
+    private double[][] getArray() { return array;}
+    public void setArray(double[][] array) { this.array = array;}
+
     public Matrix(int row, int column) {
-        //TODO: Delete line below and write your own solution;
-        throw new UnsupportedOperationException();
+
+        if (row <= 0)
+        {
+            throw new ArrayIndexOutOfBoundsException (ACTION_2);
+        }
+        if (column <= 0)
+        {
+            throw new ArrayIndexOutOfBoundsException (ACTION_2);
+        }
+        rows = row;
+        columns = column;
+        array = new double[rows][columns];
+
     }
 
-    /**
-     * Implement a constructor that creating of matrix based on existing two-dimensional array.
-     *
-     * @param twoDimensionalArray existing two-dimensional array
-     * @return Returns a new instance of the matrix based on existing two-dimensional array
-     * @throws MatrixException if the incoming array with zero number of rows returns the message "Array passed with zero number of rows",
-     *                         if the incoming array with zero number of columns returns the message "Array passed with zero number of columns"
-     */
     public Matrix(double[][] twoDimensionalArray) throws MatrixException {
-        //TODO: Delete line below and write your own solution;
-        throw new UnsupportedOperationException();
+        if (twoDimensionalArray != null) {
+            rows = twoDimensionalArray.length;
+            columns = twoDimensionalArray[0].length;
+            this.array = new double[rows][columns];
+            for (int i = 0; i < rows; i++)
+                for (int j = 0; j < columns; j++)
+                    this.array[i][j] = twoDimensionalArray[i][j];
+        }
+        else throw new MatrixException(ACTION_2);
     }
 
-    /**
-     * @return Returns the number of rows in a matrix
-     */
     public final int rows() {
-        //TODO: Delete line below and write your own solution;
-        throw new UnsupportedOperationException();
+        return rows;
     }
 
-    /**
-     * @return Returns the number of columns in a matrix
-     */
     public final int columns() {
-        //TODO: Delete line below and write your own solution;
-        throw new UnsupportedOperationException();
+        return columns;
     }
 
-    /**
-     * Receiving of standard two-dimensional array out of matrix.
-     *
-     * @return Standard two-dimensional array
-     */
     public double[][] twoDimensionalArrayOutOfMatrix() {
-        //TODO: Delete line below and write your own solution;
-        throw new UnsupportedOperationException();
+        double[][] buf = new double[rows][columns];
+        for (int i = 0; i < rows; i++)
+            for (int j = 0; j < columns; j++)
+                buf[i][j] = array[i][j];
+        return buf;
     }
 
-    /**
-     * Reading of elements via predetermined correct index
-     *
-     * @param row    number of rows
-     * @param column number of columns
-     * @return Returns the value of a matrix element <code>[row,column]</code>
-     * @throws MatrixException if index incorrect, returns message "Incompatible matrix sizes"
-     */
     public double getValue(int row, int column) throws MatrixException {
-        //TODO: Delete line below and write your own solution;
-        throw new UnsupportedOperationException();
+        if (array != null) { return array[row][column]; } else { throw new MatrixException(ACTION_2); }
     }
-
-    /**
-     * Recording value <code>newValue</code> of elements via predetermined correct index <code>[row,column]</code>     *
-     *
-     * @param row      number of rows
-     * @param column   number of columns
-     * @param newValue new value of a matrix element
-     * @throws MatrixException if index incorrect, returns message "Incompatible matrix sizes"
-     */
     public void setValue(int row, int column, double newValue) throws MatrixException {
-        //TODO: Delete line below and write your own solution;
-        throw new UnsupportedOperationException();
+       if (array != null) { array[row][column] = newValue; } else { throw new MatrixException(ACTION_2); }
     }
 
-    /**
-     * Method of matrix's addition  <code>matrix</code>.
-     * Result in the original matrix
-     *
-     * @param matrix matrix corresponding to the second term
-     * @return Returns a new resulting matrix
-     * @throws MatrixException if incompatible matrix sizes, returns message "Incompatible matrix sizes"
-     */
     public Matrix addition(Matrix matrix) throws MatrixException {
-        //TODO: Delete line below and write your own solution;
-        throw new UnsupportedOperationException();
+        if (matrix == null)
+        {
+            throw new IllegalArgumentException(ACTION_1);
+        }
+        Matrix z = new Matrix(rows, columns);
+        double value;
+
+        if(rows == matrix.getRows() && columns == matrix.getColumns()) {
+            for (int i = 0; i < matrix.getRows(); i++) {
+                for (int j = 0; j < matrix.getColumns(); j++) {
+                    value = array[i][j] + matrix.getValue(i, j);
+                    z.setValue((int) value, i, j);
+                }
+            }
+            return z;
+        }
+        else
+        {
+            throw new MatrixException(ACTION_2);
+        }
     }
 
-    /**
-     * Method of matrix's deduction <code>matrix</code> from original.
-     * Result in the original matrix
-     *
-     * @param matrix matrix corresponding to the subtracted
-     * @return Returns a new resulting matrix
-     * @throws MatrixException if incompatible matrix sizes, returns message "Incompatible matrix sizes"
-     */
     public Matrix subtraction(final Matrix matrix) throws MatrixException {
-        //TODO: Delete line below and write your own solution;
-        throw new UnsupportedOperationException();
+        if (matrix == null)
+        {
+            throw new IllegalArgumentException(ACTION_1);
+        }
+
+        Matrix z = new Matrix(rows, columns);
+        double value;
+        if(rows == matrix.getRows() && columns == matrix.getColumns())
+        {
+            for(int i = 0; i < matrix.getRows(); i++)
+            {
+                for(int j = 0; j < matrix.getColumns(); j++)
+                {
+                    value = array[i][j] - matrix.getValue(i,j);
+                    z.setValue((int) value,i,j);
+
+                }
+            }
+            return z;
+        }
+        else
+        {
+            throw new MatrixException(ACTION_2);
+        }
     }
 
-    /**
-     * Method of matrix's multiplication <code>matrix</code>
-     * Result in the original matrix
-     *
-     * @param matrix matrix corresponding to the second factor
-     * @return Returns a new resulting matrix
-     * @throws MatrixException if incompatible matrix sizes, returns message "Incompatible matrix sizes"
-     */
+
     public Matrix multiplication(final Matrix matrix) throws MatrixException {
-        //TODO: Delete line below and write your own solution;
-        throw new UnsupportedOperationException();
+        if (matrix == null)
+        {
+            throw new IllegalArgumentException(ACTION_1);
+        }
+
+            Matrix z = new Matrix(rows, matrix.getColumns());
+            double value;
+
+
+            if(columns == matrix.getRows())
+            {
+                for(int i = 0; i < rows; i++)
+                {
+                    for(int j = 0; j < matrix.getColumns(); j++)
+                    {
+                        double sum = 0;
+                        for(int k = 0; k < rows; k++)
+                        {
+                            sum += array[i][k] * matrix.getValue(k,j);
+                        }
+                        value = sum;
+                        z.setValue((int) value,i,j);
+                    }
+
+                }
+                return z;
+        }
+        else
+        {
+            throw new MatrixException(ACTION_2);
+        }
     }
+
 
     @Override
     public String toString() {
