@@ -7,7 +7,6 @@ public class Matrix {
     private int rows;
     private int columns;
     private double[][] array;
-    private static final String ACTION_1 = "matrix is null";
     private static final String ACTION_2 = "Incompatible matrix sizes";
 
     private int getRows() { return rows;}
@@ -70,7 +69,7 @@ public class Matrix {
     public Matrix addition(Matrix matrix) throws MatrixException {
         if (matrix == null)
         {
-            throw new IllegalArgumentException(ACTION_1);
+            throw new MatrixException(ACTION_2);
         }
         if (rows <= 0 || columns <= 0) { throw new MatrixException(ACTION_2); }
         Matrix z = new Matrix(rows, columns);
@@ -94,7 +93,7 @@ public class Matrix {
     public Matrix subtraction(final Matrix matrix) throws MatrixException {
         if (matrix == null)
         {
-            throw new IllegalArgumentException(ACTION_1);
+            throw new MatrixException(ACTION_2);
         }
 
         if (rows <= 0 || columns <= 0) { throw new MatrixException(ACTION_2); }
@@ -125,7 +124,7 @@ public class Matrix {
     public Matrix multiplication(final Matrix matrix) throws MatrixException {
         if (matrix == null)
         {
-            throw new IllegalArgumentException(ACTION_1);
+            throw new MatrixException(ACTION_2);
         }
         if (rows <= 0 || columns <= 0) { throw new MatrixException(ACTION_2); }
 
